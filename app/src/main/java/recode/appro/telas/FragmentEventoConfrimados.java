@@ -129,11 +129,18 @@ public class FragmentEventoConfrimados extends Fragment {
                         // Storing each json item in variable
 //                        int _id = c.getInt(TAG_ID);
                         String nick = c.getString(TAG_NICK);
-                        String estudante = c.getString(TAG_ESTUDANTE);
+                        int estudante = c.getInt(TAG_ESTUDANTE);
                         String curso = c.getString(TAG_CURSO);
-                        int periodo = c.getInt(TAG_PERIODO);
 
-                        Usuario usuario = new Usuario(nick,estudante,curso,periodo);
+                        Usuario usuario;
+                        if (estudante==1){
+                        int periodo = c.getInt(TAG_PERIODO);
+                            usuario = new Usuario(nick,estudante,curso,periodo);
+                        }
+                        else{
+                            usuario = new Usuario(nick,estudante);
+                        }
+
                         usuariosArray.add(usuario);
 
                     }

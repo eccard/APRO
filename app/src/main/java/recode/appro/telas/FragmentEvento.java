@@ -33,7 +33,7 @@ public class FragmentEvento extends android.support.v4.app.Fragment implements V
     ProgressDialog pDialog;
     JSONParser jsonParser = new JSONParser();
     // url to create new product
-    private static String url_cadastrar_usuario_em_evento = "http://10.0.0.113/aproWSt/usuario-em-evento.php";
+    private static String url_cadastrar_usuario_em_evento = "http://10.0.0.103/aproWSt/usuario-em-evento.php";
     // JSON Node names
     private static final String TAG_SUCCESS = "success";
 
@@ -133,7 +133,7 @@ class CadastrarUsuarioEmEvento extends AsyncTask<String, String, String> {
         ControladorUsuario controladorUsuario = new ControladorUsuario(getActivity().getApplicationContext());
 
         String nick = controladorUsuario.GetNomeUsuario();
-
+        Log.i("nick do usuario ",nick);
 
         // Building Parameters
         List<NameValuePair> params = new ArrayList<NameValuePair>();

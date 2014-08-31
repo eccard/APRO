@@ -55,7 +55,7 @@ public class AdapterItemUsuarios extends BaseAdapter {
         TextView nick = (TextView) view.findViewById(R.id.textView_nick);
         TextView informacoes = (TextView) view.findViewById(R.id.textView_periodo_curso);
 
-        if(usuarios.get(position).getEstudante().equalsIgnoreCase("Aluno")){
+        if(usuarios.get(position).getEstudante()==1){
             nick.setText(usuarios.get(position).getNick());
             informacoes.setText(usuarios.get(position).getPeriodo() + " p. " + usuarios.get(position).getCurso());
         }else
