@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Valor dos itens do Action Bar -->
+    <string name="app_name">PURO AÇO</string>
+    <string name="action_pesquisar">Pesquisar</string>
+
+    <!-- Valor dos itens do Navigation Drawer -->
+    <string name="drawer_opcoes">Opções</string>
+    <string name="drawer_open">Abrir drawer</string>
+    <string name="drawer_close">Fechar drawer</string>
+    <string name="calendario_url_adminsitrativo">http://www.prograd.uff.br/novo/sites/default/files/administrativo2014_retificado_0.pdf</string>
+    <string name="calendario_url_escolar">http://www.prograd.uff.br/novo/sites/default/files/escolar2014_retificado_0.pdf</string>
+    <string name="mapasalandar1">http://www.pontodabusca.com.br/trabalho/mapa-de-salas-andar-1.jpg</string>
+    <string name="mapasalandar2">http://www.pontodabusca.com.br/trabalho/mapa-de-salas-andar-2.jpg</string>
+    
+    <string name="informacao_titulo">Universidade Federal Fluminense</string>
+    <string name="informacao_endereco">Endereço: Rua Recife, s/n, Jardim Bela Vista, Rio das Ostras - RJ </string>
+    <string name="informacao_cep">CEP: 28895-532</string>
+    <string name="informacao_tel">Tel: (22) 2764-9604</string>
+    <string name="informacao_emails">E-mails: puro@vm.uff.br, kvsa@vm.uff.br</string>
+    <string name="informacao_disposicao_de_salas">Disposição de salas</string>
+    <string name="informacao_disposicao_de_salas_1">1° andar</string>
+    <string name="informacao_disposicao_de_salas_2">2° andar</string>
+    <string name="calendario_titulo">Calendários Escolar e Administrativo</string>
+    <string name="calendario_calendario_escolar">Acessar Calendário Escolar</string>
+    <string name="calendario_calendario_admin">Acessar Calendário Administrativo</string>
+
+    <!-- Valor dos itens (Pai) que compoem o navigation drawer -->
+    <string-array name="navigation_drawer_itens_pai">
+        <item>Calendários</item>
+        <item>Cursos</item>
+        <item>Departamentos</item>
+        <item>Notícias</item>
+        <item>Sobre</item>
+    </string-array>
+
+    <!-- Valor dos itens (Filho) que compoem o item Calendários -->
+    <string-array name="navigation_drawer_itens_filhos_calendario">
+        <item>Administrativo</item>
+        <item>Estudantil</item>
+    </string-array>
+
+    <!-- Valor dos itens (Filho) que compoem o item Cursos -->
+    <string-array name="navigation_drawer_itens_filhos_cursos">
+        <item>Engenharia de Produção</item>
+        <item>Ciência da Computação</item>
+        <item>Enfermagem</item>
+        <item>Serviço Social</item>
+        <item>Produção Cultural</item>
+    </string-array>
+
+    <!-- Valor dos itens que compoem o item Departamentos -->
+    <string name="departamento_descricao">Descriçã do Departamento</string>
+    <string name="departamento_chefe">Chefe de Departamento</string>
+
+    <!-- Valor dos itens (Filho) que compoem o item Notícias -->
+    <string-array name="navigation_drawer_itens_filhos_notícias"></string-array>
+
+    <!-- Valor dos itens (Filho) que compoem o item Sobre -->
+    <string-array name="navigation_drawer_itens_filhos_sobre">
+        <item>Desenvolvedores</item>
+    </string-array>
+
+    <!-- Valor das TextViews das informações dos cursos -->
+    <string name="curso_informacoes_descricao">Descrição do Curso</string>
+    <string name="curso_informacoes_duracao">Duração</string>
+    <string name="curso_informacoes_titulacao">Titulação</string>
+    <string name="curso_informacoes_mercado">Mercado de Trabalho</string>
+    <string name="curso_coordenação_endereco">Endereço</string>
+    <string name="curso_coordenação_coordenador">Coordenador</string>
+    <string name="curso_coordenação_email">E-mail</string>
+    <string name="curso_coordenação_telefone">Telefone</string>
+    <string name="curso_coordenação_fax">Telefone/Fax</string>
+
+
+<!-- Login Activity-->
+        <string-array name="cursos_array">
+            <item>1</item>
+            <item>2</item>
+            <item>3</item>
+            <item>4</item>
+            <item>5</item>
+            <item>6</item>
+            <item>7</item>
+            <item>8</item>
+            <item>9</item>
+            <item>10</item>
+            <item>11</item>
+            <item>12</item>
+        </string-array>
+
+    <!--// string sync-->
+    <string name="ACCOUNT_TYPE">org.c99.SyncProviderDemo.account</string>
+    <string name="nick">Nick:</string>
+    <string name="username_hint">efudd</string>
+    <string name="curso">Curso:</string>
+    <string name="categoria">Categoria:</string>
+    <string name="password_hint">w4bb1ts!</string>
+    <string name="login">Login</string>
+    <string name="authenticating">Authenticating</string>
+
+</resources>

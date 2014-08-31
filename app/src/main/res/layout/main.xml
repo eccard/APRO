@@ -1,0 +1,128 @@
+<!--
+  Copyright 2010 Sam Steele
+  
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  
+    http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+    <TextView android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/nick" />
+    <EditText android:layout_height="wrap_content"
+        android:id="@+id/nick"
+        android:layout_width="fill_parent"
+        android:inputType="textNoSuggestions">
+
+    </EditText>
+    <TextView android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/categoria"/>
+    <RadioGroup
+        android:id="@+id/radiongroup_tipo_usuario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:orientation="vertical">
+        <RadioButton
+            android:checked="true"
+            android:id="@+id/check_button_Aluno"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="Aluno"
+            android:onClick="onRadioButtonClicked">
+
+        </RadioButton>
+        <RadioButton
+            android:id="@+id/check_button_Professor_tecnico"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="Professor, tecnico"
+            android:onClick="onRadioButtonClicked">
+        </RadioButton>
+
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/textViewCursoLoginActivity"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/curso"/>
+    <RadioGroup
+        android:id="@+id/radiobutton_loggin_curso"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:orientation="vertical">
+        <RadioButton
+            android:id="@+id/check_button_curso_cc"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="Ciência da Computação">
+
+        </RadioButton>
+        <RadioButton
+            android:id="@+id/check_button_curso_enf"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="Enfermagem">
+        </RadioButton>
+
+        <RadioButton
+            android:id="@+id/check_button_curso_eng_prod"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="Engenharia de Produção">
+        </RadioButton>
+        <RadioButton
+            android:id="@+id/check_button_curso_procult"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="Produção Cultural">
+        </RadioButton>
+        <RadioButton
+            android:id="@+id/check_button_curso_psico"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="Psicologia">
+        </RadioButton>
+        <RadioButton
+            android:id="@+id/check_button_curso_servs"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="Serviço Social">
+        </RadioButton>
+
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/textViewPeriodoLoginActivity"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Periodo"/>
+
+    <Spinner
+        android:layout_width="86dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner" />
+
+    <Button android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/login"
+        android:text="@string/login"
+        android:layout_gravity="center_horizontal">
+
+    </Button>
+</LinearLayout>
