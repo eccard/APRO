@@ -58,6 +58,10 @@ public class AdapterItemUsuarios extends BaseAdapter {
         if(usuarios.get(position).getEstudante().equalsIgnoreCase("Aluno")){
             nick.setText(usuarios.get(position).getNick());
             informacoes.setText(usuarios.get(position).getPeriodo() + " p. " + usuarios.get(position).getCurso());
+        }else
+        {
+            nick.setText(usuarios.get(position).getNick());
+            informacoes.setText("");
         }
 
         return view;

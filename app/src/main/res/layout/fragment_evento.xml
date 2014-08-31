@@ -75,6 +75,8 @@
         android:text="Confirmados"
         android:id="@+id/button_confirmados_em_evento"
         android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/textView_evento_confimados" />
+        android:layout_alignLeft="@+id/textView_evento_confimados"
+        android:layout_alignStart="@+id/textView_evento_confimados"
+        android:layout_marginLeft="34dp" />
 
 </RelativeLayout>

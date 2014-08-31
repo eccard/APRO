@@ -101,13 +101,13 @@ public class LoginActivity extends AccountAuthenticatorActivity implements Adapt
                     RadioButton tipoUsuario = (RadioButton) findViewById(selectdTipoUsuario);
                     RadioButton cursoUsuario = (RadioButton) findViewById(selectdCursoUsuario);
 
-                    tipoUsuario.getText();
-                    cursoUsuario.getText();
+//                    tipoUsuario.getText();
+//                    cursoUsuario.getText();
 //                    periodoAluno
 
-                    Log.i("mensagem", nick);
-                    Log.i("mensagem", cursoUsuario.getText().toString());
-                    Log.i("mensagem", String.valueOf(periodoAluno));
+//                    Log.i("mensagem", nick);
+//                    Log.i("mensagem", cursoUsuario.getText().toString());
+//                    Log.i("mensagem", String.valueOf(periodoAluno));
 
                     ControladorUsuario controladorUsuario = new ControladorUsuario(getApplicationContext());
                     if(tipoUsuario.getText().toString().equalsIgnoreCase("Aluno")){

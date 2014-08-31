@@ -40,8 +40,7 @@ public class FragmentEventoConfrimados extends Fragment {
     ArrayList<HashMap<String, String>> usuarioList;
 
     // url to get all products list
-    private static String url_usaurios_em_evento = "http://api.androidhive.info/android_connect/get_all_products.php";
-    private static String  url_usuarios_confirmados="http://10.0.0.103/aproWSt/listar-confimados-em-evento.php";
+    private static String  url_usuarios_confirmados="http://10.0.0.103/aproWSt/listar-confirmados-em-evento.php";
     // JSON Node names
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_USUARIOS = "usuarios";
@@ -62,17 +61,20 @@ public class FragmentEventoConfrimados extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Bundle bundle = getArguments();
-        id_evento = bundle.getInt("id_evento");
+        id_evento = Integer.valueOf(bundle.getString("id_evento"));
 
         getActivity().getActionBar().setTitle("Usuarios");
         getActivity().getActionBar().setSubtitle(null);
 
-        View view = inflater.inflate(R.layout.activity_fragment_evento_confrimados,
+        View view = inflater.inflate(R.layout.fragment_list_view_generica,
                 container, false);
+
+        new LoadAllUsuarioEmEvento().execute();
+
         listViewAdapter = new AdapterItemUsuarios(getActivity()
                 .getApplicationContext());
         listViewUsuarios = (ListView) view.findViewById(R.id.listView_generica);
-        listViewUsuarios.setAdapter(listViewAdapter);
+//        listViewUsuarios.setAdapter(listViewAdapter);
 
         return view;
     }
@@ -88,7 +90,7 @@ public class FragmentEventoConfrimados extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            pDialog = new ProgressDialog(getActivity().getApplicationContext());
+            pDialog = new ProgressDialog(getActivity());
             pDialog.setMessage("Loading products. Please wait...");
             pDialog.setIndeterminate(false);
             pDialog.setCancelable(false);
@@ -102,14 +104,16 @@ public class FragmentEventoConfrimados extends Fragment {
             // Building Parameters
             List<NameValuePair> params = new ArrayList<NameValuePair>();
 
-            ControladorUsuario controladorUsuario = new ControladorUsuario(getActivity().getApplicationContext());
+//            ControladorUsuario controladorUsuario = new ControladorUsuario(getActivity().getApplicationContext());
             // getting JSON string from URL
-            JSONObject json = jParser.makeHttpRequest(url_usuarios_confirmados + "?id_evento="+id_evento, "GET", params);
-
-            // Check your log cat for JSON reponse
-            Log.d("All Products: ", json.toString());
 
             try {
+                JSONObject json = jParser.makeHttpRequest(url_usuarios_confirmados + "?id_evento="+id_evento, "GET", params);
+
+                // Check your log cat for JSON reponse
+                Log.d("All Users: ", json.toString());
+
+
                 // Checking for SUCCESS TAG
                 int success = json.getInt(TAG_SUCCESS);
 
@@ -150,6 +154,8 @@ public class FragmentEventoConfrimados extends Fragment {
             // dismiss the dialog after getting all products
             pDialog.dismiss();
             listViewAdapter.setUsuarios(usuariosArray);
+            listViewUsuarios.setAdapter(listViewAdapter);
+
             // updating UI from Background Thread
 //            runOnUiThread(new Runnable() {
 //                public void run() {
