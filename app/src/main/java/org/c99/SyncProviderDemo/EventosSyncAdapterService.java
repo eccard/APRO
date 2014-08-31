@@ -262,7 +262,7 @@ public class EventosSyncAdapterService extends Service {
         ArrayList<Evento> listaNovosEventos;
 
         // JSON Node names
-        final String TAG_SUCCESSO = "sucesso";
+        final String TAG_SUCCESSO = "sucess";
         final String TAG_EVENTOS = "eventos";
         final String TAG_CODIGO = "_id";
         final String TAG_NOME = "nome";
@@ -273,7 +273,7 @@ public class EventosSyncAdapterService extends Service {
         final String TAG_HORA = "hora";
 
 //        final String url_all_eventoss = "http://10.0.0.113/aproWS/eventos/listarultimoseventos.php";
-        final String url_all_eventoss = "http://10.0.0.113/aproWSt/listarultimoseventos.php";
+        final String url_all_eventoss = "http://10.0.0.103/aproWSt/listarultimoseventos.php";
 
         ControladorEvento controladorEvento = new ControladorEvento(context);
         int codigoultimoevento = controladorEvento.getCodigoUltimoEvento();

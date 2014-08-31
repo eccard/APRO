@@ -6,7 +6,6 @@ import java.util.List;
 import recode.appro.controlador.ControladorCurso;
 import recode.appro.model.Disciplina;
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

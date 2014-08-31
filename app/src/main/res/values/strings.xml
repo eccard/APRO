@@ -13,7 +13,6 @@
     <string name="calendario_url_escolar">http://www.prograd.uff.br/novo/sites/default/files/escolar2014_retificado_0.pdf</string>
     <string name="mapasalandar1">http://www.pontodabusca.com.br/trabalho/mapa-de-salas-andar-1.jpg</string>
     <string name="mapasalandar2">http://www.pontodabusca.com.br/trabalho/mapa-de-salas-andar-2.jpg</string>
-    
     <string name="informacao_titulo">Universidade Federal Fluminense</string>
     <string name="informacao_endereco">Endereço: Rua Recife, s/n, Jardim Bela Vista, Rio das Ostras - RJ </string>
     <string name="informacao_cep">CEP: 28895-532</string>
@@ -55,7 +54,7 @@
     <string name="departamento_chefe">Chefe de Departamento</string>
 
     <!-- Valor dos itens (Filho) que compoem o item Notícias -->
-    <string-array name="navigation_drawer_itens_filhos_notícias"></string-array>
+    <string-array name="navigation_drawer_itens_filhos_notícias" />
 
     <!-- Valor dos itens (Filho) que compoem o item Sobre -->
     <string-array name="navigation_drawer_itens_filhos_sobre">
@@ -73,24 +72,23 @@
     <string name="curso_coordenação_telefone">Telefone</string>
     <string name="curso_coordenação_fax">Telefone/Fax</string>
 
+    <!-- Login Activity -->
+    <string-array name="cursos_array">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+    </string-array>
 
-<!-- Login Activity-->
-        <string-array name="cursos_array">
-            <item>1</item>
-            <item>2</item>
-            <item>3</item>
-            <item>4</item>
-            <item>5</item>
-            <item>6</item>
-            <item>7</item>
-            <item>8</item>
-            <item>9</item>
-            <item>10</item>
-            <item>11</item>
-            <item>12</item>
-        </string-array>
-
-    <!--// string sync-->
+    <!-- // string sync -->
     <string name="ACCOUNT_TYPE">org.c99.SyncProviderDemo.account</string>
     <string name="nick">Nick:</string>
     <string name="username_hint">efudd</string>
@@ -99,5 +97,8 @@
     <string name="password_hint">w4bb1ts!</string>
     <string name="login">Login</string>
     <string name="authenticating">Authenticating</string>
+    <string name="title_activity_fragment_evento_confrimados">FragmentEventoConfrimados</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
 
 </resources>

@@ -1,6 +1,5 @@
 package recode.appro.telas;
 
-import java.util.Dictionary;
 import java.util.List;
 
 import recode.appro.model.Disciplina;

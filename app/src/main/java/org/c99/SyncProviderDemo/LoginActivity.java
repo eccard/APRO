@@ -25,6 +25,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.renderscript.Sampler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,9 +40,17 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import recode.appro.conexao.JSONParser;
 import recode.appro.controlador.ControladorUsuario;
 import recode.appro.telas.R;
 
@@ -53,6 +62,7 @@ public class LoginActivity extends AccountAuthenticatorActivity implements Adapt
     Spinner periodo;
     TextView textViewcurso;
     TextView textViewperiodo;
+    private static final String TAG_SUCCESS = "success";
 
     int periodoAluno;
     ArrayList<String> s;
@@ -85,7 +95,6 @@ public class LoginActivity extends AccountAuthenticatorActivity implements Adapt
 
 				if (nick.length() > 0) {
 					LoginTask t = new LoginTask(LoginActivity.this);
-					t.execute(nick);
 
                     int selectdTipoUsuario = radioGroupTipoUsuario.getCheckedRadioButtonId();
                     int selectdCursoUsuario = radioGroupCurso.getCheckedRadioButtonId();
@@ -96,17 +105,23 @@ public class LoginActivity extends AccountAuthenticatorActivity implements Adapt
                     cursoUsuario.getText();
 //                    periodoAluno
 
-                    Log.i("mensagem",nick);
-                    Log.i("mensagem",cursoUsuario.getText().toString());
-                    Log.i("mensagem",String.valueOf(periodoAluno));
+                    Log.i("mensagem", nick);
+                    Log.i("mensagem", cursoUsuario.getText().toString());
+                    Log.i("mensagem", String.valueOf(periodoAluno));
 
                     ControladorUsuario controladorUsuario = new ControladorUsuario(getApplicationContext());
-                    if(tipoUsuario.toString().equalsIgnoreCase("Aluno")){
-                    controladorUsuario.criarUsuarioAluno(nick,cursoUsuario.getText().toString(),periodoAluno);
+                    if(tipoUsuario.getText().toString().equalsIgnoreCase("Aluno")){
+                        Log.i("tipoUsuario",tipoUsuario.getText().toString());
+                    //esse primeiro parametro 1 é pra informar a thread que é do tipo aluno, e a inserção é direfente
+                     t.execute("1",nick,cursoUsuario.getText().toString(),String.valueOf(periodoAluno));
+//                    controladorUsuario.criarUsuarioAluno(nick,cursoUsuario.getText().toString(),periodoAluno);
                     }
                     else{
-                        controladorUsuario.criarUsuarioPT(nick);
+                        t.execute("0",nick);
+//                        controladorUsuario.criarUsuarioPT(nick);
                     }
+
+//					 t.execute(nick);
 
                 }
 			}
@@ -151,52 +166,123 @@ public class LoginActivity extends AccountAuthenticatorActivity implements Adapt
 
 
     private class LoginTask extends AsyncTask<String, Void, Boolean> {
-		Context mContext;
-		ProgressDialog mDialog;
+        Context mContext;
+        ProgressDialog mDialog;
+        JSONParser jsonParser = new JSONParser();
+        JSONObject json;
+        private String nick;
+        private int tipoAluno;
+        private String cursoUsuario;
+        private String periodoAluno;
+        private int sucess;
+        String url_criar_usuario = "http://10.0.0.103/aproWSt/criar-usuario.php";
 
-		LoginTask(Context c) {
-			mContext = c;
-			mLoginButton.setEnabled(false);
+        LoginTask(Context c) {
+            mContext = c;
+            mLoginButton.setEnabled(false);
 
-			mDialog = ProgressDialog.show(c, "", getString(R.string.authenticating), true, false);
-			mDialog.setCancelable(true);
-		}
+            mDialog = ProgressDialog.show(c, "", getString(R.string.authenticating), true, false);
+            mDialog.setCancelable(true);
+        }
 
-		@Override
-		public Boolean doInBackground(String... params) {
-			String nick = params[0];
+        @Override
+        public Boolean doInBackground(String... params) {
+            tipoAluno = Integer.valueOf(params[0]);
+            nick = params[1];
+
+            if (tipoAluno == 1) {
+                cursoUsuario = params[2];
+                periodoAluno = params[3];
+
+                // Building Parameters
+                List<NameValuePair> params2 = new ArrayList<NameValuePair>();
+                params2.add(new BasicNameValuePair("nick", nick));
+                params2.add(new BasicNameValuePair("estudante", String.valueOf(tipoAluno)));
+                params2.add(new BasicNameValuePair("curso", cursoUsuario));
+                params2.add(new BasicNameValuePair("periodo", periodoAluno));
+
+                // getting JSON Object
+                // Note that create product url accepts POST method
+                json = jsonParser.makeHttpRequest(url_criar_usuario,
+                        "POST", params2);
+
+                // check log cat fro response
+                Log.d("Create Response", json.toString());
+                try {
+                    sucess = json.getInt(TAG_SUCCESS);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            } else if (tipoAluno == 0) {
+                // Building Parameters
+                List<NameValuePair> params2 = new ArrayList<NameValuePair>();
+                params2.add(new BasicNameValuePair("nick", nick));
+                params2.add(new BasicNameValuePair("estudante", String.valueOf(tipoAluno)));
+
+                // getting JSON Object
+                // Note that create product url accepts POST method
+                json = jsonParser.makeHttpRequest(url_criar_usuario,
+                        "POST", params2);
+
+                // check log cat fro response
+                Log.d("Create Response", json.toString());
+                try {
+                    sucess = json.getInt(TAG_SUCCESS);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+
 //			String matricula = params[1];
 
-			// Do something internetty
-			try {
-				Thread.sleep(2000);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+            // Do something internetty
+            try {
+                Thread.sleep(2000);
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
 
-			Bundle result = null;
-			Account account = new Account(nick, mContext.getString(R.string.ACCOUNT_TYPE));
-			AccountManager am = AccountManager.get(mContext);
-			if (am.addAccountExplicitly(account, null, null)) {
-				result = new Bundle();
-				result.putString(AccountManager.KEY_ACCOUNT_NAME, account.name);
-				result.putString(AccountManager.KEY_ACCOUNT_TYPE, account.type);
-                ContentResolver.setIsSyncable(account,"evetos",1);
-				setAccountAuthenticatorResult(result);
-				return true;
-			} else {
-				return false;
-			}
-		}
+            Bundle result = null;
+            Account account = new Account(nick, mContext.getString(R.string.ACCOUNT_TYPE));
+            AccountManager am = AccountManager.get(mContext);
+            if (am.addAccountExplicitly(account, null, null)) {
+                result = new Bundle();
+                result.putString(AccountManager.KEY_ACCOUNT_NAME, account.name);
+                result.putString(AccountManager.KEY_ACCOUNT_TYPE, account.type);
+//                ContentResolver.setIsSyncable(account,"evetos",1);
+                setAccountAuthenticatorResult(result);
+                return true;
+            } else {
+                return false;
+            }
 
-		@Override
-		public void onPostExecute(Boolean result) {
-			mLoginButton.setEnabled(true);
-			mDialog.dismiss();
+            // jogar no webservice o novo usuario
 
-			if (result)
-				finish();
-		}
-	}
+        }
+
+        @Override
+        public void onPostExecute(Boolean result) {
+            mLoginButton.setEnabled(true);
+            mDialog.dismiss();
+            if (sucess == 1) {
+                Toast.makeText(getApplicationContext(), "Usuario Inserido com sucesso", Toast.LENGTH_LONG).show();
+                ControladorUsuario controladorUsuario = new ControladorUsuario(getApplicationContext());
+                if (tipoAluno == 1) {
+                    controladorUsuario.criarUsuarioAluno(nick, cursoUsuario, Integer.valueOf(periodoAluno));
+                } else if (tipoAluno == 0) {
+                    Toast.makeText(getApplicationContext(), "Usuario não inserido com sucesso", Toast.LENGTH_LONG).show();
+                    controladorUsuario.criarUsuarioPT(nick);
+                }
+                if (result)
+                    finish();
+            }
+        }
+    }
 }

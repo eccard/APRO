@@ -3,6 +3,8 @@ package recode.appro.telas;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -64,8 +66,10 @@ public class FragmentEvento extends android.support.v4.app.Fragment implements V
 //        organizadores.setGravity(Gravity.CENTER_HORIZONTAL);
         confirmados.setText("Confirmados: 0");
         Button confirmarpresenca= (Button) view.findViewById(R.id.button_confirmar_presenca);
+        Button confirmadosemevento= (Button) view.findViewById(R.id.button_confirmados_em_evento);
 
         confirmarpresenca.setOnClickListener(this);
+        confirmadosemevento.setOnClickListener(this);
 
         return view;
     }
@@ -80,6 +84,22 @@ public class FragmentEvento extends android.support.v4.app.Fragment implements V
                 new CadastrarUsuarioEmEvento().execute();
                 break;
 
+            case R.id.button_confirmados_em_evento:
+                Log.i("botão evento confirmados","apertou o botao");
+
+                Bundle args = new Bundle();
+                args.putString("id_evento",String.valueOf(evento.getCodigo()));
+                Fragment fragment = new FragmentEventoConfrimados();
+                fragment.setArguments(args);
+
+                FragmentTransaction frgManager = getFragmentManager().beginTransaction();
+                frgManager.replace(R.id.content_frame,fragment);
+                frgManager.addToBackStack(null);
+                frgManager.commit();
+
+
+
+                break;
             default:
                 break;
 
