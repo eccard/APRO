@@ -24,11 +24,12 @@ import recode.appro.controlador.ControladorEvento;
 import recode.appro.controlador.ControladorNoticia;
 import recode.appro.controlador.ControladorUsuario;
 import recode.appro.model.Evento;
+import recode.appro.model.FragmentListener;
 import recode.appro.model.Noticia;
 import recode.appro.persistencia.DataBaseHelper;
 
 public class NavigationDrawer extends FragmentActivity implements
-        OnGroupClickListener, OnChildClickListener {
+        OnGroupClickListener, OnChildClickListener,FragmentListener {
 
     private DrawerLayout mDrawerLayout;
     private ExpandableListView mDrawerList;
@@ -129,10 +130,12 @@ public class NavigationDrawer extends FragmentActivity implements
 
                     mNotificationManager.cancel(evento.getCodigo());
 
-                    fragment = new FragmentEvento(evento);
-                    android.support.v4.app.FragmentManager frgManager = getSupportFragmentManager();
-                    frgManager.beginTransaction().replace(R.id.content_frame, fragment)
-                            .commit();
+                    //fragment = new FragmentEvento(evento);
+                    callbackEvento(evento);
+
+//                    android.support.v4.app.FragmentManager frgManager = getSupportFragmentManager();
+//                    frgManager.beginTransaction().replace(R.id.content_frame, fragment)
+//                            .commit();
                     mDrawerLayout.closeDrawer(mDrawerList);
 
                 }
@@ -533,5 +536,17 @@ public class NavigationDrawer extends FragmentActivity implements
         }
 
         return false;
+    }
+
+    @Override
+    public void callbackEvento(Evento evento) {
+        getActionBar().setTitle("Evento");
+       getSupportFragmentManager().beginTransaction().replace(R.id.content_frame,FragmentEvento.newInstance(evento)).commit();
+    }
+
+    @Override
+    public void callbackEventoConfirmados(Evento evento) {
+        getActionBar().setTitle("Usuarios Confirmados");
+        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame,FragmentEventoConfrimados.newInstance(evento.getCodigo())).commit();
     }
 }

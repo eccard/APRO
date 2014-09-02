@@ -1,5 +1,6 @@
 package recode.appro.telas;
 
+import android.app.Activity;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
@@ -26,6 +27,7 @@ import java.util.List;
 import recode.appro.conexao.JSONParser;
 import recode.appro.controlador.ControladorEvento;
 import recode.appro.model.Evento;
+import recode.appro.model.FragmentListener;
 import recode.appro.model.Noticia;
 
 import android.app.ProgressDialog;
@@ -68,6 +70,7 @@ public class FragmentEventos extends Fragment implements AdapterView.OnItemClick
     // eventos novos vindo do servidos
     ArrayList<Evento> listaNovosEventos;
 
+    private FragmentListener fragmentListener;
     public FragmentEventos() {
     }
 
@@ -100,14 +103,29 @@ public class FragmentEventos extends Fragment implements AdapterView.OnItemClick
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Log.i("akiii",String.valueOf(position));
         Evento evento = listViewAdapter.getEventos().get(position);
-
+        /*
         Fragment fragmentEvento = new FragmentEvento(evento);
         FragmentTransaction frgManager = getFragmentManager().beginTransaction();
         frgManager.replace(R.id.content_frame,fragmentEvento);
         frgManager.addToBackStack(null);
         frgManager.commit();
+        */
+        fragmentListener.callbackEvento(evento);
 
 
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try{
+            fragmentListener = (FragmentListener) activity;
+
+        }catch (ClassCastException e)
+        {
+            throw new ClassCastException(activity.toString() + " deve implementar FragmentListener");
+
+        }
     }
 
     @Override

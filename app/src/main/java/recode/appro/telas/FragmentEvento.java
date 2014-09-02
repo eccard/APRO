@@ -1,5 +1,6 @@
 package recode.appro.telas;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -24,6 +25,8 @@ import recode.appro.controlador.ControladorEvento;
 import recode.appro.controlador.ControladorUsuario;
 import recode.appro.model.Evento;
 import recode.appro.conexao.JSONParser;
+import recode.appro.model.FragmentListener;
+
 import org.json.JSONException;
 /**
  * Created by eccard on 7/25/14.
@@ -37,11 +40,38 @@ public class FragmentEvento extends android.support.v4.app.Fragment implements V
     // JSON Node names
     private static final String TAG_SUCCESS = "success";
 
-    public FragmentEvento(Evento evento) {
-        this.evento = evento;
-    }
+    FragmentListener fragmentListener;
+
+    //public FragmentEvento(Evento evento) {
+     //   this.evento = evento;
+    //}
 
     public FragmentEvento(){}
+
+    public static FragmentEvento newInstance(Evento evento){
+        FragmentEvento fragmentEvento = new FragmentEvento();
+        Bundle args = new Bundle();
+        args.putSerializable("evento",evento);
+        fragmentEvento.setArguments(args);
+        return fragmentEvento;
+
+    }
+    private Evento getEvento(){
+        return (Evento) getArguments().getSerializable("evento");
+    }
+
+    @Override // ligação dessa classe com a fragmentEventoConfirmados
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try{
+            fragmentListener = (FragmentListener) activity;
+
+        }catch (ClassCastException e)
+        {
+            throw new ClassCastException(activity.toString() + " deve implementar FragmentListener");
+
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -49,6 +79,8 @@ public class FragmentEvento extends android.support.v4.app.Fragment implements V
         getActivity().getActionBar().setSubtitle(null);
 
         View view = inflater.inflate(R.layout.fragment_evento,container,false);
+
+        evento = getEvento();
 
         TextView nome = (TextView) view.findViewById(R.id.textView_evento_nome);
         TextView datahora = (TextView) view.findViewById(R.id.textView_evento_data_hora);
@@ -87,6 +119,8 @@ public class FragmentEvento extends android.support.v4.app.Fragment implements V
             case R.id.button_confirmados_em_evento:
                 Log.i("botão evento confirmados","apertou o botao");
 
+                fragmentListener.callbackEventoConfirmados(evento);
+                /*
                 Bundle args = new Bundle();
                 args.putString("id_evento",String.valueOf(evento.getCodigo()));
                 Fragment fragment = new FragmentEventoConfrimados();
@@ -96,7 +130,7 @@ public class FragmentEvento extends android.support.v4.app.Fragment implements V
                 frgManager.replace(R.id.content_frame,fragment);
                 frgManager.addToBackStack(null);
                 frgManager.commit();
-
+                */
 
 
                 break;
@@ -129,7 +163,8 @@ class CadastrarUsuarioEmEvento extends AsyncTask<String, String, String> {
     /**
      * Creating product
      * */
-    protected String doInBackground(String... args) {
+
+     protected String doInBackground(String... args) {
         ControladorUsuario controladorUsuario = new ControladorUsuario(getActivity().getApplicationContext());
 
         String nick = controladorUsuario.GetNomeUsuario();
@@ -138,7 +173,8 @@ class CadastrarUsuarioEmEvento extends AsyncTask<String, String, String> {
         // Building Parameters
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("nick", nick));
-        params.add(new BasicNameValuePair("id_evento", String.valueOf(evento.getCodigo())));
+//        params.add(new BasicNameValuePair("id_evento", String.valueOf(getEvento().getCodigo()))); //alteração , teste de novo padrão
+        params.add(new BasicNameValuePair("id_evento", String.valueOf(evento.getCodigo()))); //alteração , teste de novo padrão
 
         // getting JSON Object
         // Note that create product url accepts POST method

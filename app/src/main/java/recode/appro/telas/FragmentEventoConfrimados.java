@@ -57,11 +57,20 @@ public class FragmentEventoConfrimados extends Fragment {
     int id_evento;
     public FragmentEventoConfrimados() {
     }
+    public static FragmentEventoConfrimados newInstance(int id_evento){
+        FragmentEventoConfrimados fragmentEventoConfrimados = new FragmentEventoConfrimados();
+        Bundle args = new Bundle();
+        args.putInt("id_evento",id_evento);
+        fragmentEventoConfrimados.setArguments(args);
+        return fragmentEventoConfrimados;
+    }
+    private int  getId_evento(){return (int) getArguments().getInt("id_evento");}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Bundle bundle = getArguments();
-        id_evento = Integer.valueOf(bundle.getString("id_evento"));
+        //Bundle bundle = getArguments();
+        //id_evento = Integer.valueOf(bundle.getString("id_evento"));
+        id_evento=getId_evento();
 
         getActivity().getActionBar().setTitle("Usuarios");
         getActivity().getActionBar().setSubtitle(null);
