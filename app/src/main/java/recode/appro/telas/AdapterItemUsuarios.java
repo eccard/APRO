@@ -10,8 +10,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import recode.appro.controlador.ControladorEvento;
-import recode.appro.model.Evento;
 import recode.appro.model.Usuario;
 
 /**
