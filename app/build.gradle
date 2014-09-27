@@ -1,8 +1,8 @@
 apply plugin: 'android'
 
 android {
-    compileSdkVersion 17
-    buildToolsVersion "19.1.0"
+    compileSdkVersion 19
+    buildToolsVersion "20"
 
     defaultConfig {
         applicationId "recode.appro.telas"
@@ -19,5 +19,5 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:+'
+    compile 'com.android.support:support-v4:20.0.0+'
 }

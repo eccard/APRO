@@ -51,12 +51,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import recode.appro.conexao.JSONParser;
-import recode.appro.controlador.ControladorEvento;
-import recode.appro.controlador.ControladorNoticia;
-import recode.appro.model.Evento;
-import recode.appro.model.Noticia;
-import recode.appro.telas.AdapterItemEventos;
-import recode.appro.telas.NavigationDrawer;
+import recode.appro.evento.controle.ControladorEvento;
+import recode.appro.evento.Evento;
+import recode.appro.evento.view.AdapterItemEventos;
+import recode.appro.main.view.NavigationDrawer;
 import recode.appro.telas.R;
 
 /**

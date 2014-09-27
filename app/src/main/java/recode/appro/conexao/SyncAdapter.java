@@ -21,9 +21,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import recode.appro.controlador.ControladorNoticia;
-import recode.appro.model.Noticia;
-import recode.appro.telas.NavigationDrawer;
+import recode.appro.noticia.controle.ControladorNoticia;
+import recode.appro.noticia.modelo.Noticia;
+import recode.appro.main.view.NavigationDrawer;
 import recode.appro.telas.R;
 
 /**

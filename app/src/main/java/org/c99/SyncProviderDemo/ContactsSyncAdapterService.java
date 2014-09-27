@@ -15,9 +15,7 @@
  ******************************************************************************/
 package org.c99.SyncProviderDemo;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import android.accounts.Account;
@@ -34,9 +32,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SyncResult;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.Bitmap.CompressFormat;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -55,10 +50,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import recode.appro.conexao.JSONParser;
-import recode.appro.controlador.ControladorNoticia;
-import recode.appro.model.Noticia;
-import recode.appro.telas.AdapterItemNoticias;
-import recode.appro.telas.NavigationDrawer;
+import recode.appro.noticia.controle.ControladorNoticia;
+import recode.appro.noticia.modelo.Noticia;
+import recode.appro.main.view.NavigationDrawer;
 import recode.appro.telas.R;
 
 /**

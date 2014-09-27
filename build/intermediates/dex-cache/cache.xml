@@ -2,10 +2,22 @@
 <pre-dex-items>
 
     <item
-        dex="/home/eccard/projects/Android-Studio/APRO/app/build/intermediates/pre-dexed/debug/support-v4-19.1.0-3b1a306ec42746074300009ac615ca85fef3d001.jar"
-        jar="/home/eccard/applications/android-studio/sdk/extras/android/m2repository/com/android/support/support-v4/19.1.0/support-v4-19.1.0.jar"
+        dex="/home/romulo-eduardo/Documents/Projetos/Android/PUROApp/APRO/app/build/intermediates/pre-dexed/debug/classes-cb0913afdce714aac7d47adabde5bf7196641d07.jar"
+        jar="/home/romulo-eduardo/Documents/Projetos/Android/PUROApp/APRO/app/build/intermediates/exploded-aar/com.android.support/support-v4/20.0.0/classes.jar"
         jumboMode="false"
-        revision="19.1.0"
-        sha1="85f201b380937e61a9dce6ca90ccf6872abbfb67"/>
+        revision="20.0.0"
+        sha1="8694693636ab36910c8100ce527c258ff3ebece0"/>
+    <item
+        dex="/home/romulo-eduardo/Documents/Projetos/Android/PUROApp/APRO/app/build/intermediates/pre-dexed/debug/support-annotations-20.0.0-c22b3e0ac692a0b724c2238dfcd296eb9139aef1.jar"
+        jar="/home/romulo-eduardo/Downloads/Programas/Android Development/SDK/sdk/extras/android/m2repository/com/android/support/support-annotations/20.0.0/support-annotations-20.0.0.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="9d9013e9ff35fc3756411e62873c363c70c638fa"/>
+    <item
+        dex="/home/romulo-eduardo/Documents/Projetos/Android/PUROApp/APRO/app/build/intermediates/pre-dexed/debug/internal_impl-20.0.0-e0f788631c995f3e62e1465471ccc1a4d7102e7d.jar"
+        jar="/home/romulo-eduardo/Documents/Projetos/Android/PUROApp/APRO/app/build/intermediates/exploded-aar/com.android.support/support-v4/20.0.0/libs/internal_impl-20.0.0.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="e40b3078e3fbd353c9f44da8df25a8fc0078209d"/>
 
 </pre-dex-items>

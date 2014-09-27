@@ -27,7 +27,7 @@
         android:label="@string/app_name"
         android:theme="@style/Theme.Uff" >
         <activity
-            android:name=".NavigationDrawer"
+            android:name="recode.appro.main.view.NavigationDrawer"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -55,7 +55,7 @@
         </activity>
 
         <service
-            android:name="recode.appro.services.AccountAuthenticatorService"
+            android:name="org.c99.SyncProviderDemo.AccountAuthenticatorService"
             android:exported="true"
             android:process=":auth" >
             <intent-filter>
@@ -68,8 +68,8 @@
         </service>
 
         <provider
-            android:name="recode.appro.provider.NoticiasProvider"
-            android:authorities="recode.appro.provider.NoticiaProvider"
+            android:name="recode.appro.main.provider.NoticiasProvider"
+            android:authorities="recode.appro.main.provider.NoticiaProvider"
             android:exported="true"
             android:label="Noticias"
             android:multiprocess="true" >
@@ -89,8 +89,8 @@
         </service>
 
         <provider
-            android:name="recode.appro.provider.EventoProvider"
-            android:authorities="recode.appro.provider.EventoProvider"
+            android:name="recode.appro.main.provider.EventoProvider"
+            android:authorities="recode.appro.main.provider.EventoProvider"
             android:exported="true"
             android:label="Eventos"
             android:multiprocess="true" >
@@ -108,11 +108,6 @@
                 android:name="android.content.SyncAdapter"
                 android:resource="@xml/sync_eventos" />
         </service>
-
-        <activity
-            android:name=".FragmentEventoConfrimados"
-            android:label="@string/title_activity_fragment_evento_confrimados" >
-        </activity>
     </application>
 
     <!-- <service -->

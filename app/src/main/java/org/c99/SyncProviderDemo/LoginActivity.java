@@ -18,24 +18,17 @@ package org.c99.SyncProviderDemo;
 import android.accounts.Account;
 import android.accounts.AccountAuthenticatorActivity;
 import android.accounts.AccountManager;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.ContentResolver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.renderscript.Sampler;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.NumberPicker;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -51,7 +44,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import recode.appro.conexao.JSONParser;
-import recode.appro.controlador.ControladorUsuario;
+import recode.appro.main.controle.ControladorUsuario;
 import recode.appro.telas.R;
 
 public class LoginActivity extends AccountAuthenticatorActivity implements AdapterView.OnItemSelectedListener {
