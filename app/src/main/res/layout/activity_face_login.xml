@@ -1,0 +1,145 @@
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+    <TextView android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/nick" />
+    <EditText android:layout_height="wrap_content"
+        android:id="@+id/nick"
+        android:layout_width="fill_parent"
+        android:inputType="textNoSuggestions">
+
+    </EditText>
+    <TextView android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/categoria"/>
+    <RadioGroup
+        android:id="@+id/radiongroup_tipo_usuario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:orientation="vertical">
+        <RadioButton
+            android:checked="true"
+            android:id="@+id/check_button_Aluno"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="Aluno"
+            android:onClick="onRadioButtonClicked">
+
+        </RadioButton>
+        <RadioButton
+            android:id="@+id/check_button_Professor_tecnico"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="Professor, tecnico"
+            android:onClick="onRadioButtonClicked">
+        </RadioButton>
+
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/textViewCursoLoginActivity"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/curso"/>
+    <RadioGroup
+        android:id="@+id/radiobutton_loggin_curso"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:orientation="vertical">
+        <RadioButton
+            android:id="@+id/check_button_curso_cc"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="Ciência da Computação">
+
+        </RadioButton>
+        <RadioButton
+            android:id="@+id/check_button_curso_enf"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="Enfermagem">
+        </RadioButton>
+
+        <RadioButton
+            android:id="@+id/check_button_curso_eng_prod"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="Engenharia de Produção">
+        </RadioButton>
+        <RadioButton
+            android:id="@+id/check_button_curso_procult"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="Produção Cultural">
+        </RadioButton>
+        <RadioButton
+            android:id="@+id/check_button_curso_psico"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="Psicologia">
+        </RadioButton>
+        <RadioButton
+            android:id="@+id/check_button_curso_servs"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="Serviço Social">
+        </RadioButton>
+
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/textViewPeriodoLoginActivity"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Periodo"/>
+
+    <Spinner
+        android:layout_width="86dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner" />
+
+     <GridLayout
+         android:orientation="horizontal"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_gravity="center_horizontal">
+
+
+         <Button android:layout_width="87dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/login"
+            android:text="@string/login"
+             android:layout_row="0"
+             android:layout_column="5"
+             android:layout_gravity="bottom">
+
+        </Button>
+
+         <com.facebook.widget.LoginButton
+        android:id="@+id/authButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+             android:layout_row="0"
+             android:layout_column="6" />
+
+
+     </GridLayout>
+
+    <!--<TextView-->
+        <!--android:id="@+id/userInfoTextView"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_marginLeft="20dp"-->
+        <!--android:layout_marginTop="20dp"-->
+        <!--android:textAppearance="?android:attr/textAppearanceMedium"-->
+        <!--android:visibility="invisible"-->
+        <!--/>-->
+
+</LinearLayout>

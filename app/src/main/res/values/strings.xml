@@ -101,4 +101,9 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
+    <!-- FACEBOOK -->
+    <string name="app_id">1566093263609466</string>
+    <string name="title_activity_face_login">FaceLogin</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

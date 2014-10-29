@@ -432,7 +432,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         values.put("hora",evento.getHora());
         values.put("presenca",evento.getPresenca());
         try{
-            dbQuery.insert("evento",null,values);
+
         }catch (SQLException e){
             Log.i(e.toString(),e.toString());
         }
