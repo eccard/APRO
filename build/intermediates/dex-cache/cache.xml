@@ -1,23 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<pre-dex-items>
+<items version="2" >
 
     <item
-        dex="/home/romulo-eduardo/Documents/Projetos/Android/PUROApp/APRO/app/build/intermediates/pre-dexed/debug/classes-cb0913afdce714aac7d47adabde5bf7196641d07.jar"
-        jar="/home/romulo-eduardo/Documents/Projetos/Android/PUROApp/APRO/app/build/intermediates/exploded-aar/com.android.support/support-v4/20.0.0/classes.jar"
+        jar="/home/eccard/projects/Android-Studio/APRO/app/build/intermediates/exploded-aar/com.facebook.android/facebook/3.19.1/classes.jar"
         jumboMode="false"
         revision="20.0.0"
-        sha1="8694693636ab36910c8100ce527c258ff3ebece0"/>
+        sha1="b7d442384ca2a52924f1767a1f5835e2f9231d84">
+        <dex dex="/home/eccard/projects/Android-Studio/APRO/app/build/intermediates/pre-dexed/debug/classes-c14ebc46e9f730cd5fc335361e8cb5767fb7f0b7.jar" />
+    </item>
     <item
-        dex="/home/romulo-eduardo/Documents/Projetos/Android/PUROApp/APRO/app/build/intermediates/pre-dexed/debug/support-annotations-20.0.0-c22b3e0ac692a0b724c2238dfcd296eb9139aef1.jar"
-        jar="/home/romulo-eduardo/Downloads/Programas/Android Development/SDK/sdk/extras/android/m2repository/com/android/support/support-annotations/20.0.0/support-annotations-20.0.0.jar"
+        jar="/home/eccard/projects/Android-Studio/APRO/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.0/libs/internal_impl-21.0.0.jar"
         jumboMode="false"
         revision="20.0.0"
-        sha1="9d9013e9ff35fc3756411e62873c363c70c638fa"/>
+        sha1="1609e6d42d0480b0f4188e2c29f75388fa12a8f0">
+        <dex dex="/home/eccard/projects/Android-Studio/APRO/app/build/intermediates/pre-dexed/debug/internal_impl-21.0.0-5371bed6a49546c75ff1ae7ff48944a7f3188c34.jar" />
+    </item>
     <item
-        dex="/home/romulo-eduardo/Documents/Projetos/Android/PUROApp/APRO/app/build/intermediates/pre-dexed/debug/internal_impl-20.0.0-e0f788631c995f3e62e1465471ccc1a4d7102e7d.jar"
-        jar="/home/romulo-eduardo/Documents/Projetos/Android/PUROApp/APRO/app/build/intermediates/exploded-aar/com.android.support/support-v4/20.0.0/libs/internal_impl-20.0.0.jar"
+        jar="/home/eccard/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-android/1.1.2/91c20388c9a45f62b5ed8fe0502bb76ff6251fc7/bolts-android-1.1.2.jar"
         jumboMode="false"
         revision="20.0.0"
-        sha1="e40b3078e3fbd353c9f44da8df25a8fc0078209d"/>
+        sha1="91c20388c9a45f62b5ed8fe0502bb76ff6251fc7">
+        <dex dex="/home/eccard/projects/Android-Studio/APRO/app/build/intermediates/pre-dexed/debug/bolts-android-1.1.2-72d424566516624ceaa0a3531b00f2e4f243e59c.jar" />
+    </item>
+    <item
+        jar="/home/eccard/projects/Android-Studio/APRO/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.0/classes.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="686344a780033e4ba22b926cd225f8d4941247e6">
+        <dex dex="/home/eccard/projects/Android-Studio/APRO/app/build/intermediates/pre-dexed/debug/classes-138544974be04f6c360fa842fc7f6eaa3c0514f0.jar" />
+    </item>
+    <item
+        jar="/home/eccard/projects/Android-Studio/APRO/app/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.5.87/classes.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="dd9247ea0fabe8ee479638c4b4a23e93752be256">
+        <dex dex="/home/eccard/projects/Android-Studio/APRO/app/build/intermediates/pre-dexed/debug/classes-e857c09966620bbbce09fe70095ca91c37622139.jar" />
+    </item>
+    <item
+        jar="/home/eccard/applications/sdk/extras/android/m2repository/com/android/support/support-annotations/21.0.0/support-annotations-21.0.0.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="1a578b9607b36266c63d43a4fa0ab5664dbe911e">
+        <dex dex="/home/eccard/projects/Android-Studio/APRO/app/build/intermediates/pre-dexed/debug/support-annotations-21.0.0-4044bf0246d2232da1bd3c88dd7fa5d44ae51f79.jar" />
+    </item>
 
-</pre-dex-items>
+</items>

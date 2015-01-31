@@ -22,7 +22,7 @@
     <uses-permission android:name="android.permission.WRITE_CONTACTS" />
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <application
         android:allowBackup="true"
         android:icon="@drawable/logo"
@@ -41,6 +41,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name="org.c99.SyncProviderDemo.LoginActivity"
             android:label="@string/app_name" >
@@ -48,12 +49,14 @@
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
+
         <activity android:name="recode.appro.main.view.FaceLogin"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
+
         <activity
             android:name="org.c99.SyncProviderDemo.ProfileActivity"
             android:label="Profile" >
@@ -65,8 +68,10 @@
                 <data android:mimeType="vnd.android.cursor.item/vnd.org.c99.SyncProviderDemo.profile" />
             </intent-filter>
         </activity>
+
         <activity android:name="com.facebook.LoginActivity"
             android:label="@string/app_name" />
+
         <service
             android:name="org.c99.SyncProviderDemo.AccountAuthenticatorService"
             android:exported="true"
@@ -123,6 +128,22 @@
         </service>
 
         <!-- FACEBOOK -->
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <!-- gcm -->
+        <receiver
+            android:name="recode.appro.gcm.GcmBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+
+                <category android:name="com.programmingtechniques.gcmdemo" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name="recode.appro.gcm.GcmIntentService" />
 
     </application>
 

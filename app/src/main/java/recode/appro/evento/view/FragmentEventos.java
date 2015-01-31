@@ -53,8 +53,8 @@ public class FragmentEventos extends Fragment implements AdapterView.OnItemClick
     // Creating JSON Parser object
     JSONParser jParser = new JSONParser();
     ArrayList<HashMap<String, String>> eventosList;
-    private static String url_all_eventoss = "http://10.0.0.104/aproWS/eventos/listarultimoseventos.php";
-
+//    private static String url_all_eventoss = "http://10.0.0.104/aproWS/eventos/listarultimoseventos.php";
+    private static String url_all_eventoss;
     // JSON Node names
     private static final String TAG_SUCCESSO = "sucesso";
     private static final String TAG_EVENTOS = "eventos";
@@ -74,6 +74,8 @@ public class FragmentEventos extends Fragment implements AdapterView.OnItemClick
     private FragmentListener fragmentListener;
     public FragmentEventos() {
     }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -119,6 +121,7 @@ public class FragmentEventos extends Fragment implements AdapterView.OnItemClick
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
+        url_all_eventoss = this.getResources().getString(R.string.url_ultimos_eventos);
         try{
             fragmentListener = (FragmentListener) activity;
 

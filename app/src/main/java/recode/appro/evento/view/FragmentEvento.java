@@ -2,6 +2,8 @@ package recode.appro.evento.view;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,11 +32,13 @@ import org.json.JSONException;
  * Created by eccard on 7/25/14.
  */
 public class FragmentEvento extends android.support.v4.app.Fragment implements View.OnClickListener {
+    final String TAG="FragmentEvento";
     Evento evento;
     ProgressDialog pDialog;
     JSONParser jsonParser = new JSONParser();
     // url to create new product
-    private static String url_cadastrar_usuario_em_evento = "http://10.0.0.103/aproWSt/usuario-em-evento.php";
+//    private static String url_cadastrar_usuario_em_evento = "http://10.0.0.103/aproWSt/usuario-em-evento.php";
+    private static String url_cadastrar_usuario_em_evento;
     // JSON Node names
     private static final String TAG_SUCCESS = "success";
 
@@ -47,6 +51,7 @@ public class FragmentEvento extends android.support.v4.app.Fragment implements V
     public FragmentEvento(){}
 
     public static FragmentEvento newInstance(Evento evento){
+
         FragmentEvento fragmentEvento = new FragmentEvento();
         Bundle args = new Bundle();
         args.putSerializable("evento",evento);
@@ -61,6 +66,7 @@ public class FragmentEvento extends android.support.v4.app.Fragment implements V
     @Override // ligação dessa classe com a fragmentEventoConfirmados
     public void onAttach(Activity activity) {
         super.onAttach(activity);
+        url_cadastrar_usuario_em_evento = this.getResources().getString(R.string.url_usuario_em_evento);
         try{
             fragmentListener = (FragmentListener) activity;
 
@@ -111,7 +117,7 @@ public class FragmentEvento extends android.support.v4.app.Fragment implements V
 
             case R.id.button_confirmar_presenca:
 
-                new CadastrarUsuarioEmEvento().execute();
+                new CadastrarUsuarioEmEvento(getActivity().getApplicationContext()).execute();
                 break;
 
             case R.id.button_confirmados_em_evento:
@@ -144,7 +150,14 @@ public class FragmentEvento extends android.support.v4.app.Fragment implements V
  * Background Async Task to Create new product
  * */
 class CadastrarUsuarioEmEvento extends AsyncTask<String, String, String> {
-    int success;
+    int success=0;
+    Context ctx;
+    String nick;
+
+    public CadastrarUsuarioEmEvento(Context ctx){
+        this.ctx=ctx;
+    }
+
     /**
      * Before starting background thread Show Progress Dialog
      * */
@@ -163,47 +176,50 @@ class CadastrarUsuarioEmEvento extends AsyncTask<String, String, String> {
      * */
 
      protected String doInBackground(String... args) {
-        ControladorUsuario controladorUsuario = new ControladorUsuario(getActivity().getApplicationContext());
-
-        String nick = controladorUsuario.GetNomeUsuario();
+//        ControladorUsuario controladorUsuario = new ControladorUsuario(getActivity().getApplicationContext());
+//        nick = controladorUsuario.GetNomeUsuario();
+         SharedPreferences prefs = ctx.getSharedPreferences("gcm.eccard.prefs",
+                 Context.MODE_PRIVATE);
+        nick = prefs.getString("nick","");
         Log.i("nick do usuario ",nick);
-
-        // Building Parameters
-        List<NameValuePair> params = new ArrayList<NameValuePair>();
-        params.add(new BasicNameValuePair("nick", nick));
+        if(!nick.isEmpty()) {
+            // Building Parameters
+            List<NameValuePair> params = new ArrayList<NameValuePair>();
+            params.add(new BasicNameValuePair("nick", nick));
 //        params.add(new BasicNameValuePair("id_evento", String.valueOf(getEvento().getCodigo()))); //alteração , teste de novo padrão
-        params.add(new BasicNameValuePair("id_evento", String.valueOf(evento.getCodigo()))); //alteração , teste de novo padrão
+            params.add(new BasicNameValuePair("id_evento", String.valueOf(evento.getCodigo()))); //alteração , teste de novo padrão
 
-        // getting JSON Object
-        // Note that create product url accepts POST method
-        JSONObject json = jsonParser.makeHttpRequest(url_cadastrar_usuario_em_evento,
-                "POST", params);
+            // getting JSON Object
+            // Note that create product url accepts POST method
+            JSONObject json = jsonParser.makeHttpRequest(url_cadastrar_usuario_em_evento,
+                    "POST", params);
 
-        // check log cat fro response
-        Log.d("Create Response", json.toString());
+            // check log cat fro response
+            Log.d("Create Response", json.toString());
 
-        // check for success tag
-        try {
-            success = json.getInt(TAG_SUCCESS);
+            // check for success tag
+            try {
+                success = json.getInt(TAG_SUCCESS);
 
-            if (success == 1) {
+                if (success == 1) {
 //                Log.i("fagmere","fagmerviviiadooo");
 
 //                pDialog.setMessage("cadastrado com sucesso");
-                //Toast toast =  Toast.makeText(getActivity(),"Presença Confirmada", Toast.LENGTH_LONG);
-                //toast.show();
+                    //Toast toast =  Toast.makeText(getActivity(),"Presença Confirmada", Toast.LENGTH_LONG);
+                    //toast.show();
 
-                // successfully created product
+                    // successfully created product
 //                Intent i = new Intent(getApplicationContext(), AllProductsActivity.class);
 //                startActivity(i);
 
-                // closing this screen
+                    // closing this screen
 //                finish();
-            } else {
-                // failed to create product
+                } else {
+                    // failed to create product
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
         }
 
         return null;
@@ -216,16 +232,15 @@ class CadastrarUsuarioEmEvento extends AsyncTask<String, String, String> {
         // dismiss the dialog once done
         pDialog.dismiss();
         if (success == 1) {
-            Log.i("Sucesso","onPost- Sucesso");
+            Log.i(TAG,"presença confirmada em evento");
             Toast toast =  Toast.makeText(getActivity(),"Presença Confirmada", Toast.LENGTH_LONG);
             toast.show();
-
-
-
         }
-
-
+        else
+            if(success==0){
+                Log.i(TAG,"presença não confirmada em evento- talvez faltou o nick. pode ter sido limpado na cache, tratar isso");
+                Toast.makeText(getActivity(),"erro ao confirmar presença", Toast.LENGTH_LONG).show();
+            }
     }
-
 }
 }

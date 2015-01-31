@@ -1,5 +1,6 @@
 package recode.appro.evento.view;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -34,7 +35,8 @@ public class FragmentEventoConfrimados extends Fragment {
     ArrayList<HashMap<String, String>> usuarioList;
 
     // url to get all products list
-    private static String  url_usuarios_confirmados="http://10.0.0.103/aproWSt/listar-confirmados-em-evento.php";
+//    private static String  url_usuarios_confirmados="http://10.0.0.103/aproWSt/listar-confirmados-em-evento.php";
+    private static String  url_usuarios_confirmados;
     // JSON Node names
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_USUARIOS = "usuarios";
@@ -59,6 +61,12 @@ public class FragmentEventoConfrimados extends Fragment {
         return fragmentEventoConfrimados;
     }
     private int  getId_evento(){return (int) getArguments().getInt("id_evento");}
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        url_usuarios_confirmados = this.getResources().getString(R.string.url_confirmados_em_evento);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

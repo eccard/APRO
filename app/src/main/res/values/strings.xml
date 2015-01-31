@@ -106,4 +106,14 @@
     <string name="title_activity_face_login">FaceLogin</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <!--<string name="url_usuario_em_evento">http://192.168.0.2/netbeans/php/APRO/usuario-em-evento.php</string>-->
+    <!--<string name="url_confirmados_em_evento">http://192.168.0.2/netbeans/php/APRO/listar-confirmados-em-evento.php</string>-->
+    <!--<string name="url_ultimos_eventos">http://192.168.0.2/netbeans/php/APRO/listarultimoseventos.php</string>-->
+    <!---->
+    <string name="url_criar_usuario">http://appti.com.br/lugao/APRO/criar-usuario.php</string>
+    <string name="url_usuario_em_evento">http://appti.com.br/lugao/APRO/usuario-em-evento.php</string>
+    <string name="url_confirmados_em_evento">http://appti.com.br/lugao/APRO/listar-confirmados-em-evento.php</string>
+    <string name="url_ultimos_eventos">http://appti.com.br/lugao/APRO/listarultimoseventos.php</string>
+
+
 </resources>

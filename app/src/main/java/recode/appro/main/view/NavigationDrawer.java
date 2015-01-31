@@ -2,7 +2,9 @@ package recode.appro.main.view;
 
 import android.app.ActionBar;
 import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
@@ -90,9 +92,18 @@ public class NavigationDrawer extends FragmentActivity implements
 
         //implementando o facebooc
 
+        //fazer a verificação se já existe um usuario registrado pelo sharedPreferences. ver qual é mais rapido
+        SharedPreferences sharedPreferences = this.getSharedPreferences("gcm.eccard.prefs", Context.MODE_PRIVATE);
+        boolean registrado = sharedPreferences.getBoolean("registrado",false);
+        if(!registrado){
+            Intent intent = new Intent(this, FaceLogin.class);
+            startActivity(intent);
+            Log.i(TAG,"usuario não criado");
+
+        }
+/*
         // verificar se já tem usuario caso não tenho um registrar
         ControladorUsuario controladorUsuario  = new ControladorUsuario(getApplicationContext());
-
         if(controladorUsuario.verificarSeExisteUsuario()==0){//se não existe usuario,criar
            Intent intent = new Intent(this, FaceLogin.class);
             startActivity(intent);
@@ -109,6 +120,8 @@ public class NavigationDrawer extends FragmentActivity implements
 
             //fim verificar se já tem usuario caso não tenho um registrar
         }
+
+        */
         else {
 
 
@@ -188,6 +201,7 @@ public class NavigationDrawer extends FragmentActivity implements
             }
 
 
+
             // final para capturar a acao da intencao para as notificacoes
 
         }
@@ -224,6 +238,7 @@ public class NavigationDrawer extends FragmentActivity implements
         };
 
         mDrawerLayout.setDrawerListener(mDrawerToggle);
+        callbackNoticias();
     }
 
     @Override
@@ -604,5 +619,11 @@ public class NavigationDrawer extends FragmentActivity implements
     public void callbackEventoConfirmados(Evento evento) {
         getActionBar().setTitle("Usuarios Confirmados");
         getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, FragmentEventoConfrimados.newInstance(evento.getCodigo())).commit();
+    }
+
+    @Override
+    public void callbackNoticias() {
+        getActionBar().setTitle("Notícias");
+        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new FragmentNoticias()).commit();
     }
 }

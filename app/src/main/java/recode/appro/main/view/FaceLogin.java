@@ -7,6 +7,11 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,17 +26,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
-import recode.appro.conexao.JSONParser;
-import recode.appro.main.controle.ControladorUsuario;
+import recode.appro.gcm.RegisterApp;
+import recode.appro.gcm.SendToServer;
+import recode.appro.main.FragmentListener;
+import recode.appro.main.TaskCallback;
 import recode.appro.telas.R;
 
 
@@ -44,9 +46,12 @@ import com.facebook.model.GraphObject;
 import com.facebook.model.GraphObjectList;
 import com.facebook.model.GraphUser;
 import com.facebook.widget.LoginButton;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 
-public class FaceLogin extends Activity implements AdapterView.OnItemSelectedListener{
+public class FaceLogin extends Activity implements AdapterView.OnItemSelectedListener,TaskCallback{
     EditText mNick;
     Button mLoginButton;
     RadioGroup radioGroupTipoUsuario;
@@ -54,7 +59,6 @@ public class FaceLogin extends Activity implements AdapterView.OnItemSelectedLis
     Spinner periodo;
     TextView textViewcurso;
     TextView textViewperiodo;
-    private static final String TAG_SUCCESS = "success";
 
     int periodoAluno;
     ArrayList<String> s;
@@ -67,11 +71,21 @@ public class FaceLogin extends Activity implements AdapterView.OnItemSelectedLis
         }
     };
 
+    //gcm
+    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+    private static final String TAG = "-FaceLogin-";
+    public static final String PROPERTY_REG_ID = "registration_id";
+    private static final String PROPERTY_APP_VERSION = "appVersion";
+    GoogleCloudMessaging gcm;
+    String regid;
+
+    TaskCallback mcallback;
 //    final NumberPicker np;
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mcallback=this;
         uiHelper = new UiLifecycleHelper(this, callback);
         uiHelper.onCreate(savedInstanceState);
 
@@ -98,40 +112,114 @@ public class FaceLogin extends Activity implements AdapterView.OnItemSelectedLis
             public void onClick(View v) {
                 String nick = mNick.getText().toString().trim().toLowerCase();
 
-                if (nick.length() > 0) {
-                    LoginTask t = new LoginTask(FaceLogin.this);
+                if (!verificarConexao(getApplicationContext())) {
+                    Toast.makeText(getApplicationContext(), "impossivel resitrar sem internet", Toast.LENGTH_SHORT).show();
+                }else
+                if(nick.length() < 1){
+                    Toast.makeText(getApplicationContext(), "insira um nick", Toast.LENGTH_SHORT).show();
+                }else
+                if( radioGroupTipoUsuario.getCheckedRadioButtonId()==R.id.check_button_Aluno && radioGroupCurso.getCheckedRadioButtonId()==-1){
+                    Toast.makeText(getApplicationContext(), "selecione um curso", Toast.LENGTH_SHORT).show();
+                }
+                else{
+//                if(radioGroupCurso.getCheckedRadioButtonId()==R.id.check_button_Professor_tecnico ){
+//                    LoginTask t = new LoginTask(FaceLogin.this);
 
                     int selectdTipoUsuario = radioGroupTipoUsuario.getCheckedRadioButtonId();
                     int selectdCursoUsuario = radioGroupCurso.getCheckedRadioButtonId();
                     RadioButton tipoUsuario = (RadioButton) findViewById(selectdTipoUsuario);
                     RadioButton cursoUsuario = (RadioButton) findViewById(selectdCursoUsuario);
 
-//                    tipoUsuario.getText();
-//                    cursoUsuario.getText();
-//                    periodoAluno
+                    periodoAluno = Integer.valueOf(periodo.getSelectedItem().toString());
 
-//                    Log.i("mensagem", nick);
-//                    Log.i("mensagem", cursoUsuario.getText().toString());
-//                    Log.i("mensagem", String.valueOf(periodoAluno));
+//                    Log.i(TAG,tipoUsuario.getText().toString() + " " + cursoUsuario.getText().toString() + " "+ periodoAluno);
+//                    ControladorUsuario controladorUsuario = new ControladorUsuario(getApplicationContext());
 
-                    ControladorUsuario controladorUsuario = new ControladorUsuario(getApplicationContext());
-                    if(tipoUsuario.getText().toString().equalsIgnoreCase("Aluno")){
-                        Log.i("tipoUsuario", tipoUsuario.getText().toString());
-                        //esse primeiro parametro 1 é pra informar a thread que é do tipo aluno, e a inserção é direfente
-                        t.execute("1",nick,cursoUsuario.getText().toString(),String.valueOf(periodoAluno));
+                    // iniciar o thread para pegar o reg id do gcm, e colocar no  método
+                    // on post execute o essas informaçoes para iniciar a thread de jogar para o nosso
+                    // banco de dados.
+
+                    if (checkPlayServices()) {
+                        gcm = GoogleCloudMessaging.getInstance(getApplicationContext());
+                        regid = getRegistrationId(getApplicationContext());
+
+                        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("gcm.eccard.prefs", Context.MODE_PRIVATE);
+                        boolean registrado = sharedPreferences.getBoolean("registrado",false);
+
+                        if (regid.isEmpty() && !registrado) {
+
+                            if(tipoUsuario.getText().toString().equalsIgnoreCase("Aluno")){
+                                Log.i("tipoUsuario", tipoUsuario.getText().toString());
+                                //esse primeiro parametro 1 é pra informar a thread que é do tipo aluno, e a inserção é direfente
+//                                t.execute("1",nick,cursoUsuario.getText().toString(),String.valueOf(periodoAluno));
+                                new RegisterApp(mcallback,getApplicationContext(), gcm, getAppVersion(getApplicationContext())).execute("1",nick,cursoUsuario.getText().toString(),String.valueOf(periodoAluno));
 //                    controladorUsuario.criarUsuarioAluno(nick,cursoUsuario.getText().toString(),periodoAluno);
+                            }
+                            else{
+//                                t.execute("0",nick);
+                                new RegisterApp(mcallback,getApplicationContext(), gcm, getAppVersion(getApplicationContext())).execute("0",nick);
+//                        controladorUsuario.criarUsuarioPT(nick);
+                            }
+
+
+                        }
+                        // caso que ja tem um regid mas por algum motivo não conseguiu envialo ao servidor
+                        else if(!registrado){
+                            Log.e(TAG,"ja tem um regid do gcm, mas não enviou ao servidor");
+                            Toast.makeText(getApplicationContext(), "Ja tem um regid do gcm, mas não enviou ao servidor", Toast.LENGTH_SHORT).show();
+
+                            if(tipoUsuario.getText().toString().equalsIgnoreCase("Aluno")){
+                                Log.i("tipoUsuario", tipoUsuario.getText().toString());
+                                //esse primeiro parametro 1 é pra informar a thread que é do tipo aluno, e a inserção é direfente
+                                new SendToServer(mcallback,getApplicationContext(),regid).execute("1",nick,cursoUsuario.getText().toString(),String.valueOf(periodoAluno));
+                            }
+                            else{
+                                new SendToServer(mcallback,getApplicationContext(),regid).execute("0",nick);
+                            }
+                        }
                     }
                     else{
-                        t.execute("0",nick);
-//                        controladorUsuario.criarUsuarioPT(nick);
+                        Log.i(TAG, "No valid Google Play Services APK found.");
                     }
-
-//					 t.execute(nick);
-
                 }
             }
 
         });
+    }
+
+    private String getRegistrationId(Context context) {
+
+        final SharedPreferences prefs = getGCMPreferences(context);
+        String registrationId = prefs.getString(PROPERTY_REG_ID, "");
+        if (registrationId.isEmpty()) {
+            Log.i(TAG, "Registration not found.");
+            return "";
+        }
+        // Check if app was updated; if so, it must clear the registration ID
+        // since the existing regID is not guaranteed to work with the new
+        // app version.
+        int registeredVersion = prefs.getInt(PROPERTY_APP_VERSION, Integer.MIN_VALUE);
+        int currentVersion = getAppVersion(getApplicationContext());
+        if (registeredVersion != currentVersion) {
+            Log.i(TAG, "App version changed.");
+            return "";
+        }
+        return registrationId;
+    }
+    private SharedPreferences getGCMPreferences(Context context) {
+        // This sample app persists the registration ID in shared preferences, but
+        // how you store the regID in your app is up to you.
+        return context.getSharedPreferences("gcm.eccard.prefs",context.MODE_PRIVATE);
+    }
+    private int getAppVersion(Context context) {
+        try {
+            PackageInfo packageInfo = context.getPackageManager()
+                    .getPackageInfo(context.getPackageName(), 0);
+            return packageInfo.versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            // should never happen
+            throw new RuntimeException("Could not get package name: " + e);
+        }
     }
 
     @Override
@@ -323,126 +411,37 @@ Log.i("paa",userInfo.toString());
 
         return userInfo.toString();
     }
-
-
-    private class LoginTask extends AsyncTask<String, Void, Boolean> {
-        Context mContext;
-        ProgressDialog mDialog;
-        JSONParser jsonParser = new JSONParser();
-        JSONObject json;
-        private String nick;
-        private int tipoAluno;
-        private String cursoUsuario;
-        private String periodoAluno;
-        private int sucess;
-        String url_criar_usuario = "http://10.0.0.104/aproWSt/criar-usuario.php";
-
-        LoginTask(Context c) {
-            mContext = c;
-            mLoginButton.setEnabled(false);
-
-            mDialog = ProgressDialog.show(c, "", getString(R.string.authenticating), true, false);
-            mDialog.setCancelable(true);
-        }
-
-        @Override
-        public Boolean doInBackground(String... params) {
-            tipoAluno = Integer.valueOf(params[0]);
-            nick = params[1];
-
-            if (tipoAluno == 1) {
-                cursoUsuario = params[2];
-                periodoAluno = params[3];
-
-                // Building Parameters
-                List<NameValuePair> params2 = new ArrayList<NameValuePair>();
-                params2.add(new BasicNameValuePair("nick", nick));
-                params2.add(new BasicNameValuePair("estudante", String.valueOf(tipoAluno)));
-                params2.add(new BasicNameValuePair("curso", cursoUsuario));
-                params2.add(new BasicNameValuePair("periodo", periodoAluno));
-
-                // getting JSON Object
-                // Note that create product url accepts POST method
-                json = jsonParser.makeHttpRequest(url_criar_usuario,
-                        "POST", params2);
-
-                // check log cat fro response
-                Log.d("Create Response", json.toString());
-                try {
-                    sucess = json.getInt(TAG_SUCCESS);
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-
-            } else if (tipoAluno == 0) {
-                // Building Parameters
-                List<NameValuePair> params2 = new ArrayList<NameValuePair>();
-                params2.add(new BasicNameValuePair("nick", nick));
-                params2.add(new BasicNameValuePair("estudante", String.valueOf(tipoAluno)));
-
-                // getting JSON Object
-                // Note that create product url accepts POST method
-                json = jsonParser.makeHttpRequest(url_criar_usuario,
-                        "POST", params2);
-
-                // check log cat fro response
-                Log.d("Create Response", json.toString());
-                try {
-                    sucess = json.getInt(TAG_SUCCESS);
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-
-
-//			String matricula = params[1];
-
-            // Do something internetty
-            try {
-                Thread.sleep(2000);
-            } catch (Exception e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-
-            Bundle result = null;
-            Account account = new Account(nick, mContext.getString(R.string.ACCOUNT_TYPE));
-            AccountManager am = AccountManager.get(mContext);
-            if (am.addAccountExplicitly(account, null, null)) {
-                result = new Bundle();
-                result.putString(AccountManager.KEY_ACCOUNT_NAME, account.name);
-                result.putString(AccountManager.KEY_ACCOUNT_TYPE, account.type);
-//                ContentResolver.setIsSyncable(account,"evetos",1);
-//                setAccountAuthenticatorResult(result);
-                return true;
-            } else {
-                return false;
-            }
-
-            // jogar no webservice o novo usuario
-
-        }
-
-        @Override
-        public void onPostExecute(Boolean result) {
-            mLoginButton.setEnabled(true);
-            mDialog.dismiss();
-            if (sucess == 1) {
-                Toast.makeText(getApplicationContext(), "Usuario Inserido com sucesso", Toast.LENGTH_LONG).show();
-                ControladorUsuario controladorUsuario = new ControladorUsuario(getApplicationContext());
-                if (tipoAluno == 1) {
-                    controladorUsuario.criarUsuarioAluno(nick, cursoUsuario, Integer.valueOf(periodoAluno));
-                } else if (tipoAluno == 0) {
-                    Toast.makeText(getApplicationContext(), "Usuario não inserido com sucesso", Toast.LENGTH_LONG).show();
-                    controladorUsuario.criarUsuarioPT(nick);
-                }
-                if (result)
-                    finish();
-            }
-        }
+    private Boolean verificarConexao(Context ctx){
+        ConnectivityManager conMgr = (ConnectivityManager) ctx.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo i = conMgr.getActiveNetworkInfo();
+        if (i == null)
+            return false;
+        if (!i.isConnected())
+            return false;
+        if (!i.isAvailable())
+            return false;
+        return true;
     }
+
+    private boolean checkPlayServices() {
+        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this.getApplicationContext());
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
+                GooglePlayServicesUtil.getErrorDialog(resultCode, this,
+                        PLAY_SERVICES_RESOLUTION_REQUEST).show();
+            } else {
+                Log.i(TAG, "This device is not supported.");
+                this.finish();
+            }
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public void done() {
+    finish();
+    }
+
+
 }

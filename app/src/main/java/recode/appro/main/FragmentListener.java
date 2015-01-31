@@ -9,4 +9,6 @@ public interface FragmentListener {
 
     public void callbackEvento(Evento evento);
     public void callbackEventoConfirmados(Evento evento);
+
+    public void callbackNoticias();
 }
